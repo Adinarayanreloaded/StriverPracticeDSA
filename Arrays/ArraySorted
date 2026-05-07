@@ -1,0 +1,20 @@
+# Function to check if the array is sorted
+def isSorted(arr, n):
+    for i in range(n):
+        for j in range(i + 1, n):
+            # If any element is smaller than the previous one, return false
+            if arr[j] < arr[i]:
+                return False
+    return True  # Return true if no unsorted elements are found
+
+# Driver code
+arr = [1, 2, 3, 4, 5]
+n = len(arr)
+
+ans = isSorted(arr, n)
+
+# Output result
+if ans:
+    print("True")
+else:
+    print("False")
