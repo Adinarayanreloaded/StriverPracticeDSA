@@ -1,0 +1,31 @@
+
+class Solution:
+    def longestSubarray(self, nums, k):
+        n = len(nums) 
+        maxLength = 0
+
+        # starting index
+        for startIndex in range(n):
+            # ending index
+            for endIndex in range(startIndex, n):
+                # add all the elements of 
+                # subarray = nums[startIndex...endIndex]
+                currentSum = 0
+                for i in range(startIndex, endIndex + 1):
+                    currentSum += nums[i]
+
+                if currentSum == k:
+                    maxLength = max(maxLength, endIndex - startIndex + 1)
+
+        return maxLength
+
+if __name__ == "__main__":
+    nums = [-1, 1, 1]
+    k = 1
+
+    # Create an instance of the Solution class
+    solution = Solution()
+    # Function call to get the result
+    length = solution.longestSubarray(nums, k)
+    
+    print("The length of the longest subarray is:", length)
