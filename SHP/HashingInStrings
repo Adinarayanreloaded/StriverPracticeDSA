@@ -1,0 +1,77 @@
+class Solution:
+
+    # Function to compute the LPS array
+    def computeLPS(self, pattern):
+
+        # Create lps array
+        lps = [0] * len(pattern)
+
+        # Length of the previous longest prefix suffix
+        length = 0
+
+        # Start from second character
+        i = 1
+
+        # Build the lps array
+        while i < len(pattern):
+
+            # If characters match
+            if pattern[i] == pattern[length]:
+                length += 1
+                lps[i] = length
+                i += 1
+            else:
+
+                # If mismatch and length > 0
+                if length != 0:
+                    length = lps[length - 1]
+                else:
+
+                    # Set lps[i] to 0 and move on
+                    lps[i] = 0
+                    i += 1
+
+        # Return computed lps
+        return lps
+
+    # KMP search function
+    def KMP(self, text, pattern):
+
+        # Compute the LPS array
+        lps = self.computeLPS(pattern)
+
+        # List to store match indices
+        result = []
+
+        # Indices for text and pattern
+        i = j = 0
+
+        # Scan through the text
+        while i < len(text):
+
+            # If characters match
+            if text[i] == pattern[j]:
+                i += 1
+                j += 1
+
+            # Full match found
+            if j == len(pattern):
+                result.append(i - j)
+                j = lps[j - 1]
+
+            # Mismatch after some matches
+            elif i < len(text) and text[i] != pattern[j]:
+                if j != 0:
+                    j = lps[j - 1]
+                else:
+                    i += 1
+
+        # Return the result
+        return result
+
+
+# Main test
+sol = Solution()
+text = "ababcababcabc"
+pattern = "abc"
+print("Pattern found at indices:", sol.KMP(text, pattern))
